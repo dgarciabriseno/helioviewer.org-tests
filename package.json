@@ -1,5 +1,5 @@
 {
-  "name": "helioviewer-tests",
+  "name": "helioviewer-tests-make-something-different",
   "scripts": {
     "prettier": "npx prettier -w tests",
     "prettier-check": "npx prettier -c tests"
