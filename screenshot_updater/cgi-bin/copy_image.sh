@@ -3,17 +3,22 @@
 echo "Content-type: text/plain"
 echo ""
 
+url_decode() {
+    python3 -c "import urllib.parse; print(urllib.parse.unquote(input()))"
+}
+
 # Extract query parameters
-test=$(echo "$QUERY_STRING" | sed -n 's/^.*test=\([^&]*\).*$/\1/p' | sed 's/+/ /g; s/%/\\x/g' | xargs -0 printf "%b")
-actual=$(echo "$QUERY_STRING" | sed -n 's/^.*actual=\([^&]*\).*$/\1/p' | sed 's/+/ /g; s/%/\\x/g' | xargs -0 printf "%b")
-projectName=$(echo "$QUERY_STRING" | sed -n 's/^.*projectName=\([^&]*\).*$/\1/p' | sed 's/+/ /g; s/%/\\x/g' | xargs -0 printf "%b")
-attachmentName=$(echo "$QUERY_STRING" | sed -n 's/^.*attachmentName=\([^&]*\).*$/\1/p' | sed 's/+/ /g; s/%/\\x/g' | xargs -0 printf "%b")
+test=$(echo "$QUERY_STRING" | sed -n 's/^.*test=\([^&]*\).*$/\1/p' | url_decode)
+actual=$(echo "$QUERY_STRING" | sed -n 's/^.*actual=\([^&]*\).*$/\1/p' | url_decode)
+projectName=$(echo "$QUERY_STRING" | sed -n 's/^.*projectName=\([^&]*\).*$/\1/p' | url_decode)
+attachmentName=$(echo "$QUERY_STRING" | sed -n 's/^.*attachmentName=\([^&]*\).*$/\1/p' | url_decode)
 
 attachmentName=$(echo "$attachmentName" | sed "s/actual/$projectName-linux/g")
 attachmentName=$(echo "$attachmentName" | sed 's/ /-/g')
 
 
 if [ "$(dirname "$actual")" != "data" ]; then
+    echo $actual
     echo "Error: Invalid actual file path"
     exit 1
 fi

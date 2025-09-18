@@ -119,7 +119,7 @@ test("[Mobile] Open Help Menu", async ({ page }) => {
   );
 });
 
-test("[Mobile] Test Help Links", async ({ page, context }) => {
+test.only("[Mobile] Test Help Links", async ({ page, context }) => {
   let mobile = new HvMobile(page);
   await mobile.Load();
 
