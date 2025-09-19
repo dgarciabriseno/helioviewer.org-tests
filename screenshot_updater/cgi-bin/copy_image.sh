@@ -18,7 +18,6 @@ attachmentName=$(echo "$attachmentName" | sed 's/ /-/g')
 
 
 if [ "$(dirname "$actual")" != "data" ]; then
-    echo $actual
     echo "Error: Invalid actual file path"
     exit 1
 fi
